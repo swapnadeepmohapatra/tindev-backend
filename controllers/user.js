@@ -1,32 +1,32 @@
 const User = require('../models/user');
 const axios = require('axios');
 
-exports.getUser = (req, res) => {
+exports.getUser = async (req, res) => {
 	const { user } = req.headers;
 
-	const loggedUser = User.findById(user);
+	const loggedUser = await User.findById(user);
 
-	const users = User.find({
+	const users = await User.find({
 		$and: [{ _id: { $ne: user } }, { _id: { $ne: loggedUser.likes } }, { _id: { $ne: loggedUser.dislikes } }],
 	});
 
 	return res.json(users);
 };
 
-exports.addUser = (req, res) => {
+exports.addUser = async (req, res) => {
 	const { username } = req.body;
 
-	const userExist = User.findOne({ user: username });
+	const userExist = await User.findOne({ user: username });
 
 	if (userExist) {
 		return res.json(userExist);
 	}
 
-	const githubRes = axios.get(`https://api.github.com/users/${username}`);
+	const githubRes = await axios.get(`https://api.github.com/users/${username}`);
 
-	const { name, bio, avatar_url: avatar } = githubRes;
+	const { name, bio, avatar_url: photo } = githubRes.data;
 
-	const user = User.create({ name, bio, avatar, user: username });
+	const user = await User.create({ name, bio, photo, user: username });
 
 	return res.json(user);
 };
