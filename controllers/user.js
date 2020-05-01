@@ -7,7 +7,7 @@ exports.getUser = async (req, res) => {
 	const loggedUser = await User.findById(user);
 
 	const users = await User.find({
-		$and: [{ _id: { $ne: user } }, { _id: { $ne: loggedUser.likes } }, { _id: { $ne: loggedUser.dislikes } }],
+		$and: [{ _id: { $ne: user } }, { _id: { $nin: loggedUser.likes } }, { _id: { $nin: loggedUser.dislikes } }],
 	});
 
 	return res.json(users);

@@ -13,7 +13,7 @@ exports.addLike = async (req, res) => {
 		return res.status(400).json({ error: "User doesn't exist" });
 	}
 
-	if (targetUser.likes.include(loggedUser._id)) {
+	if (targetUser.likes.includes(loggedUser._id)) {
 		const loggedSocket = req.connectedUsers[user];
 		const targetSocket = req.connectedUsers[userId];
 
@@ -22,7 +22,7 @@ exports.addLike = async (req, res) => {
 		}
 
 		if (targetSocket) {
-			req.io.to(targetSocket).emit('match', loggedSocket);
+			req.io.to(targetSocket).emit('match', loggedUser);
 		}
 	}
 
