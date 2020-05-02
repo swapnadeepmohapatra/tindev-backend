@@ -30,3 +30,15 @@ exports.addUser = async (req, res) => {
 
 	return res.json(user);
 };
+
+exports.getUserByID = async (req, res) => {
+	const { userid } = req.headers;
+
+	const user = await User.findOne({ _id: userid });
+
+	if (user) {
+		return res.json(user);
+	} else {
+		return res.status(400).json({ error: "User doesn't exist" });
+	}
+};
