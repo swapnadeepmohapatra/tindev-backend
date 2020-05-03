@@ -23,6 +23,7 @@ const UserSchema = new Schema(
 		},
 		likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 		dislikes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+		matches: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	},
 	{
 		timestamps: true,

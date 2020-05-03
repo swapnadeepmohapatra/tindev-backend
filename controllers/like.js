@@ -18,10 +18,12 @@ exports.addLike = async (req, res) => {
 		const targetSocket = req.connectedUsers[userId];
 
 		if (loggedSocket) {
+			loggedUser.matches.push(targetUser._id);
 			req.io.to(loggedSocket).emit('match', targetUser);
 		}
 
 		if (targetSocket) {
+			targetUser.matches.push(loggedUser._id);
 			req.io.to(targetSocket).emit('match', loggedUser);
 		}
 	}
@@ -29,6 +31,7 @@ exports.addLike = async (req, res) => {
 	loggedUser.likes.push(targetUser._id);
 
 	await loggedUser.save();
+	await targetUser.save();
 
 	return res.json(loggedUser);
 };
