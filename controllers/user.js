@@ -42,3 +42,15 @@ exports.getUserByID = async (req, res) => {
 		return res.status(400).json({ error: "User doesn't exist" });
 	}
 };
+
+exports.getUserByName = async (req, res) => {
+	const { username } = req.headers;
+
+	const user = await User.findOne({ user: username });
+
+	if (user) {
+		return res.json(user);
+	} else {
+		return res.status(400).json({ error: "User doesn't exist" });
+	}
+};
