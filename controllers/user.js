@@ -34,7 +34,7 @@ exports.addUser = async (req, res) => {
 exports.getUserByID = async (req, res) => {
 	const { userid } = req.headers;
 
-	const user = await User.findOne({ _id: userid });
+	const user = await User.findOne({ _id: userid }).populate('matches');
 
 	if (user) {
 		return res.json(user);
