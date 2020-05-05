@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 exports.addLike = async (req, res) => {
-	console.log(req.io, req.connectedUsers);
+	// console.log(req.io, req.connectedUsers);
 
 	const { user } = req.headers;
 	const { userId } = req.params;

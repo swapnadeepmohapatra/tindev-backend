@@ -4,12 +4,13 @@ const cors = require('cors');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+require('dotenv').config();
 const connectedUsers = {};
 
 const userRoutes = require('./routes/user');
 
 mongoose
-	.connect('mongodb://localhost:27017/tindev', {
+	.connect(process.env.DATABASE, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
